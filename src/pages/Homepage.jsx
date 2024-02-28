@@ -1,23 +1,13 @@
+import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { Header } from "../components/HeaderComponent";
 
 const Homepage = () => {
   return (
     <>
       <div className="h-screen">
         <div className="h-2/3 bg-emerald-600">
-          <div className="flex justify-end p-3 bg-emerald-700 ">
-            <div className="w-1/5 ms-32">
-              <img src={logo} height={100} width={100} alt="" />
-            </div>
-            <div className=" items-center  flex justify-end font-serif text-2xl w-4/5">
-              <h1 className="me-16">About</h1>
-              <h1 className="me-16">Products</h1>
-              <h1 className="me-16">Contact</h1>
-              <h1 className="me-32">
-                <i class="fa-solid fa-cart-shopping"></i>
-              </h1>
-            </div>
-          </div>
+        <Header/>
           <div className="flex flex-col items-center">
             <h1 className="mt-28  font-serif">
               An exciting place for the whole family to shop.
@@ -25,9 +15,11 @@ const Homepage = () => {
             <h1 className="font-serif text-6xl">
               Discover <span className="text-white">something new</span>
             </h1>
-            <button className="mt-7 font-serif text-white bg-black p-3 text-md rounded-lg">
-              Shop Now
-            </button>
+            <NavLink to="/shop">
+              <button className="mt-7 font-serif text-white bg-black p-3 text-md rounded-lg">
+                Shop Now
+              </button>
+            </NavLink>
           </div>
         </div>
         <div className="h-1/3 bg-black flex items-center">
@@ -54,10 +46,10 @@ const Homepage = () => {
           </div>
 
           <div className="flex w-1/2 p-20 justify-end  text-white text-4xl">
-            <i class="fa-brands fa-instagram me-10"></i>
-            <i class="fa-brands fa-facebook me-10"></i>
-            <i class="fa-brands fa-square-twitter me-10"></i>
-            <i class="fa-brands fa-linkedin me-32"></i>
+            <i className="fa-brands fa-instagram me-10"></i>
+            <i className="fa-brands fa-facebook me-10"></i>
+            <i className="fa-brands fa-square-twitter me-10"></i>
+            <i className="fa-brands fa-linkedin me-32"></i>
           </div>
         </div>
       </div>

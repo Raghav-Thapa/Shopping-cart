@@ -25,15 +25,6 @@ const ShoppingPage = () => {
         </div>
         <div className=" bg-stone-50 min-h-screen">
             <ProductCard/>
-          {/* <div className="grid grid-cols-4">
-           {products.map((product, index) => 
-            <div key={index} >  
-                <h1 className=" text-white">{product.title}</h1>
-                <img src={product.image} alt="" />
-            </div>
-           )}
-         
-          </div> */}
         </div>
       </div>
     </>

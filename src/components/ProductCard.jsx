@@ -14,13 +14,12 @@ const ProductCard = () => {
     //  console.log(products);
 
      
-    const productPagePath = `/products/${products.id}`;
 
   return (
     <>
       <div className="grid grid-cols-5 gap-10 justify-items-center ps-32 pe-32 pt-16">
         {products.map((product, index) => (
-          <NavLink to= {`/products/${product.id}`}>
+          <NavLink key={index} to={`/products/${product.id}`}>
             <div
               key={index}
               className=" bg-stone-200 h-96 w-72 rounded-md opacity-80"

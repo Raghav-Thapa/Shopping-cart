@@ -1,29 +1,36 @@
 import { NavLink, useParams } from "react-router-dom";
 import useProduct from "../hooks/useProduct";
 import { Header } from "../components/HeaderComponent";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CartContext } from "../store/CartContext";
 
 const ProductPage = () => {
+  const { cartItems, setCartItems } = useContext(CartContext);
+
   const { id } = useParams();
   const { data, error, loading } = useProduct(`/products/${id}`);
-//   console.log(data);
-   const [quantity, setQuantity] = useState(1);
+  //   console.log(data);
+  const [quantity, setQuantity] = useState(1);
 
-   const increaseQuantity = () => {
-     setQuantity((prevQuantity) => prevQuantity + 1);
-   };
+  const increaseQuantity = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
 
-   const decreaseQuantity = () => {
-     if (quantity > 1) {
-       setQuantity((prevQuantity) => prevQuantity - 1);
-     }
-   };
-     const handleInputChange = (event) => {
-       const value = event.target.value;
-       if (!isNaN(value) && value > 0) {
-         setQuantity(parseInt(value));
-       }
-     };
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity((prevQuantity) => prevQuantity - 1);
+    }
+  };
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    if (!isNaN(value) && value > 0) {
+      setQuantity(parseInt(value));
+    }
+  };
+const handleSubmitCart = () => {
+setCartItems(id)
+}
+
   return (
     <>
       <div>
@@ -72,10 +79,11 @@ const ProductPage = () => {
               </button>
             </div>
             <div>
-              <button className="mt-5 font-serif text-white bg-black p-3 text-md rounded-lg">
+              <button onClick={handleSubmitCart} className="mt-5 font-serif text-white bg-black p-3 text-md rounded-lg">
                 Add to Cart
               </button>
             </div>
+            <h1>{cartItems}</h1>
           </div>
         </div>
       </div>

@@ -17,6 +17,9 @@ const ProductCard = () => {
 
   return (
     <>
+      {loading ? (
+          <i class=" text-center w-full mt-32 text-8xl fa-solid fa-spinner fa-spin-pulse"></i>
+        ) : (
       <div className="grid grid-cols-5 gap-10 justify-items-center ps-32 pe-32 pt-16">
         {products.map((product, index) => (
           <NavLink key={index} to={`/products/${product.id}`}>
@@ -39,7 +42,7 @@ const ProductCard = () => {
             </div>
           </NavLink>
         ))}
-      </div>
+      </div>)}
     </>
   );
 };

@@ -23,7 +23,6 @@ const useProduct = (path) => {
 
 export default useProduct;
 
-
 export const useProductCart = (ids) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);

@@ -4,7 +4,7 @@ import useProduct from "../hooks/useProduct";
 import ProductCard from "../components/ProductCard";
 
 const ShoppingPage = () => {
-  const {data, error, loading} = useProduct("/products");
+  const {data} = useProduct("/products");
   const [products, setProducts] = useState([]);
 // console.log(data)
   useEffect(() => {

@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../store/CartContext";
-import  { useProductCart } from "../hooks/useProduct";
+import { useProductCart } from "../hooks/useProduct";
 import { Header } from "../components/HeaderComponent";
-import LoadingPage from "./LoadingPage";
 
 const CartPage = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, increaseQuantity, decreaseQuantity, removeItemFromCart } =
+    useContext(CartContext);
   const { data: cartProducts, error, loading } = useProductCart(cartItems);
   const [uniqueCartProducts, setUniqueCartProducts] = useState([]);
-
 
   useEffect(() => {
     if (cartItems && cartProducts) {
@@ -80,7 +79,24 @@ const CartPage = () => {
                         </h1>
                       </td>
                       <td className="border text-center">{product.price}</td>
-                      <td className="border text-center">{product.quantity}</td>
+                      <td className="border text-center p-6">
+                        <button
+                          className="me-3"
+                          onClick={() => decreaseQuantity(product.id)}
+                        >
+                          <i className=" text-sm font-semibold fa-solid fa-minus"></i>
+                        </button>
+                        {product.quantity}{" "}
+                        <button
+                          className="ms-3"
+                          onClick={() => increaseQuantity(product.id)}
+                        >
+                          <i className="text-sm font-semibold fa-solid fa-plus"></i>
+                        </button>
+                        <button className="float-end " onClick={() => removeItemFromCart(product.id)}>
+                          <i class=" fa-solid fa-trash-can"></i>
+                        </button>
+                      </td>
                       <td className="border text-center">
                         {product.totalPrice}
                       </td>

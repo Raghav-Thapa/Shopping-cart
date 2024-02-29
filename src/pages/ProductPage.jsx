@@ -3,6 +3,7 @@ import useProduct from "../hooks/useProduct";
 import { Header } from "../components/HeaderComponent";
 import { useContext, useState } from "react";
 import { CartContext } from "../store/CartContext";
+import doneImage from "../assets/tick.gif"
 
 const ProductPage = () => {
   const { addToCart } = useContext(CartContext);
@@ -10,6 +11,15 @@ const ProductPage = () => {
   const { id } = useParams();
   const { data, error, loading } = useProduct(`/products/${id}`);
   const [quantity, setQuantity] = useState(1);
+  const [cartAdded, setCartAdded] = useState(false);
+
+ const handleCartAdded = () => {
+   setCartAdded(true);
+
+   setTimeout(() => {
+     setCartAdded(false);
+   }, 2000); 
+  }
 
   const increaseQuantity = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
@@ -44,7 +54,7 @@ const ProductPage = () => {
           </div>
         </NavLink>
         {loading ? (
-          <i class=" text-center w-full mt-20 text-8xl fa-solid fa-spinner fa-spin-pulse"></i>
+          <i className=" text-center w-full mt-20 text-8xl fa-solid fa-spinner fa-spin-pulse"></i>
         ) : (
           <div className="flex ml-10 mr-10 p-10 ">
             <div className="w-1/3">
@@ -87,15 +97,28 @@ const ProductPage = () => {
                   <i className="fa-solid fa-plus"></i>
                 </button>
               </div>
-              <div>
-                <button
-                  onClick={handleSubmitCart}
-                  className="mt-5 font-serif text-white bg-black p-3 text-md rounded-lg"
-                >
-                  Add to Cart
-                </button>
+              <div className="flex">
+                <div className="z-50">
+                  <button
+                    onClick={() => {
+                      handleSubmitCart();
+                      handleCartAdded();
+                    }}
+                    className="mt-5  font-serif text-white bg-black p-3 text-md rounded-lg"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+                <div>
+                  {cartAdded && (
+                    <img
+                      className="-mt-2 -ms-4"
+                      width={150}
+                      src={doneImage}
+                    ></img>
+                  )}
+                </div>
               </div>
-              {/* <h1>{cartItems}</h1> */}
             </div>
           </div>
         )}

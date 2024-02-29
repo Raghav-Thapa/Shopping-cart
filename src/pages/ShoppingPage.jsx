@@ -14,9 +14,6 @@ const ShoppingPage = () => {
   }, [data]);
   console.log(products)
 
-  // if (error) return <p>An error occurred. Please check back later.</p>;
-  // if (loading) return <LoadingPage />;
-
   return (
     <>
       <div>

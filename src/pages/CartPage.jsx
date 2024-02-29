@@ -1,14 +1,40 @@
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../store/CartContext";
-import useProduct from "../hooks/useProduct";
+import  { useProductCart } from "../hooks/useProduct";
 import { Header } from "../components/HeaderComponent";
 
 const CartPage = () => {
   const { cartItems } = useContext(CartContext);
+  const { data: cartProducts, error, loading } = useProductCart(cartItems);
+   const [uniqueCartProducts, setUniqueCartProducts] = useState([]);
+ 
+    useEffect(() => {
+      if (cartItems && cartProducts) {
+          console.log("cartItems", cartItems);
+          console.log("cartProducts", cartProducts);
+       const calculateQuantity = (id) => {
+         return cartItems.filter((itemId) => Number(itemId) === id).length;
+       };
 
-  const [cartProducts, setCartProducts] = useState([]);
+        const calculateTotalPrice = (id, price) => {
+          const quantity = calculateQuantity(id);
+          return quantity * price;
+        };
 
-  const { data, error, loading } = useProduct(`/products/${cartItems}`);
+        const uniqueProducts = Array.from(
+          new Set(cartProducts.map((product) => product.id))
+        ).map((id) => {
+          const product = cartProducts.find((product) => product.id === id);
+          return {
+            ...product,
+            quantity: calculateQuantity(id),
+            totalPrice: calculateTotalPrice(id, product.price),
+          };
+        });
+
+        setUniqueCartProducts(uniqueProducts);
+      }
+    }, [cartItems, cartProducts]);
 
   return (
     <>
@@ -30,30 +56,22 @@ const CartPage = () => {
                 <th className="border">Quantity</th>
                 <th className="border">Total</th>
               </tr>
-              <tr className="border">
-                <td className=" flex justify-center items-center m-3">
-                  <img className="" width={100} src={data?.image} alt="" />
-                </td>
-                <td className="border ps-3 pe-3">
-                  <h1 className="text-lg">{data?.title}</h1>
-                  <h1 className="text-sm text-emerald-800">{data?.category}</h1>
-                </td>
-                <td className="border text-center">{data?.price}</td>
-                <td className="border text-center">quantity</td>
-                <td className="border text-center">total price</td>
-              </tr>
-              <tr className="border">
-                <td className=" flex justify-center items-center m-3">
-                  <img className="" width={100} src={data?.image} alt="" />
-                </td>
-                <td className="border ps-3 pe-3">
-                  <h1 className="text-lg">{data?.title}</h1>
-                  <h1 className="text-sm text-emerald-800">{data?.category}</h1>
-                </td>
-                <td className="border text-center">{data?.price}</td>
-                <td className="border text-center">quantity</td>
-                <td className="border text-center">total price</td>
-              </tr>
+              {uniqueCartProducts.map((product) => (
+                <tr className="border">
+                  <td className=" flex justify-center items-center m-3">
+                    <img className="" width={100} src={product.image} alt="" />
+                  </td>
+                  <td className="border ps-3 pe-3">
+                    <h1 className="text-lg">{product.title}</h1>
+                    <h1 className="text-sm text-emerald-800">
+                      {product.category}
+                    </h1>
+                  </td>
+                  <td className="border text-center">{product.price}</td>
+                  <td className="border text-center">{product.quantity}</td>
+                  <td className="border text-center">{product.totalPrice}</td>
+                </tr>
+              ))}
               <tr className="">
                 <td></td>
                 <td></td>

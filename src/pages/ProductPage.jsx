@@ -5,11 +5,11 @@ import { useContext, useState } from "react";
 import { CartContext } from "../store/CartContext";
 
 const ProductPage = () => {
-  const { cartItems, setCartItems } = useContext(CartContext);
+  
+  const { addToCart } = useContext(CartContext);
 
   const { id } = useParams();
   const { data, error, loading } = useProduct(`/products/${id}`);
-  //   console.log(data);
   const [quantity, setQuantity] = useState(1);
 
   const increaseQuantity = () => {
@@ -27,9 +27,11 @@ const ProductPage = () => {
       setQuantity(parseInt(value));
     }
   };
-const handleSubmitCart = () => {
-setCartItems(id)
-}
+  const handleSubmitCart = () => {
+    for (let i = 0; i < quantity; i++) {
+      addToCart(id);
+    }
+  };
 
   return (
     <>
@@ -83,7 +85,7 @@ setCartItems(id)
                 Add to Cart
               </button>
             </div>
-            <h1>{cartItems}</h1>
+            {/* <h1>{cartItems}</h1> */}
           </div>
         </div>
       </div>

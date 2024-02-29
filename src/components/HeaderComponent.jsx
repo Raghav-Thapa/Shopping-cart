@@ -26,10 +26,13 @@ export const Header = () => {
               Products
             </h1>
           </NavLink>
-          <NavLink to="/" >
+          <NavLink to="/">
             <h1 className="me-16 hover:text-white cursor-pointer">Contact</h1>
           </NavLink>
-          <NavLink to="/cart">
+          <NavLink
+            to="/cart"
+            className={({ isActive }) => (isActive ? "text-white" : "")}
+          >
             <h1 className="me-32 hover:text-white cursor-pointer">
               <i className="fa-solid fa-cart-shopping"></i>
             </h1>

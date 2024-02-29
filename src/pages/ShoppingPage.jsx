@@ -20,7 +20,7 @@ const ShoppingPage = () => {
         <div>
           <Header />
         </div>
-        <div className=" bg-stone-50 min-h-screen">
+        <div className="  min-h-screen">
             <ProductCard/>
         </div>
       </div>

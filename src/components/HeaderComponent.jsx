@@ -1,6 +1,9 @@
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { CartContext } from "../store/CartContext";
+import { useContext } from "react";
 export const Header = () => {
+  const { cartItems } = useContext(CartContext);
   return (
     <>
       <div className="flex justify-end p-3 bg-emerald-700 ">
@@ -34,7 +37,8 @@ export const Header = () => {
             className={({ isActive }) => (isActive ? "text-white" : "")}
           >
             <h1 className="me-32 hover:text-white cursor-pointer">
-              <i className="fa-solid fa-cart-shopping"></i>
+              <i className="fa-solid fa-cart-shopping me-1"></i>
+              <sup className="text-white">{cartItems.length}</sup>
             </h1>
           </NavLink>
         </div>
@@ -62,7 +66,7 @@ export const Banner = () => {
       </div>
     </>
   );
-}
+};
 
 export const Footer = () => {
   return (
@@ -95,4 +99,4 @@ export const Footer = () => {
       </div>
     </>
   );
-}
+};

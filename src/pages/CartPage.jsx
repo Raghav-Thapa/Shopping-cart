@@ -87,11 +87,19 @@ const CartPage = () => {
               />
             )}
             <div className="text-end -mt-5">
-              <NavLink to="/">
-                <button className="mt-7 font-serif text-white bg-black p-3 me-7 text-sm rounded-lg">
-                  CHECKOUT
-                </button>
-              </NavLink>
+              {subtotal ? (
+                <NavLink to="/">
+                  <button className="mt-7 font-serif text-white bg-black p-3 me-7 text-sm rounded-lg">
+                    CHECKOUT
+                  </button>
+                </NavLink>
+              ) : (
+                <NavLink to="/shop">
+                  <button className="mt-7 font-serif text-white bg-black p-3 me-7 text-sm rounded-lg">
+                  Add Items
+                  </button>
+                </NavLink>
+              )}
             </div>
           </div>
         </div>

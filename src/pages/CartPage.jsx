@@ -8,6 +8,10 @@ const CartPage = () => {
     useContext(CartContext);
   const { data: cartProducts, error, loading } = useProductCart(cartItems);
   const [uniqueCartProducts, setUniqueCartProducts] = useState([]);
+  const [subtotal, setSubtotal] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [shippingCost, setShippingCost] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
 
   useEffect(() => {
     if (cartItems && cartProducts) {
@@ -29,11 +33,26 @@ const CartPage = () => {
         return {
           ...product,
           quantity: calculateQuantity(id),
-          totalPrice: calculateTotalPrice(id, product.price),
+          totalPrice: parseFloat( calculateTotalPrice(id, product.price).toFixed(2)),
         };
       });
 
       setUniqueCartProducts(uniqueProducts);
+
+       const subtotal = parseFloat(
+         uniqueProducts
+           .reduce((total, product) => total + product.totalPrice, 0)
+           .toFixed(2)
+       );
+       const discount = parseFloat((subtotal * 0.1).toFixed(2)); 
+       const shippingCost = subtotal > 100 ? 0 : 15; 
+       const grandTotal = parseFloat(
+         (subtotal - discount + shippingCost).toFixed(2)
+       );
+       setSubtotal(subtotal);
+       setDiscount(discount);
+       setShippingCost(shippingCost);
+       setGrandTotal(grandTotal);
     }
   }, [cartItems, cartProducts]);
 
@@ -93,7 +112,10 @@ const CartPage = () => {
                         >
                           <i className="text-sm font-semibold fa-solid fa-plus"></i>
                         </button>
-                        <button className="float-end " onClick={() => removeItemFromCart(product.id)}>
+                        <button
+                          className="float-end "
+                          onClick={() => removeItemFromCart(product.id)}
+                        >
                           <i class=" fa-solid fa-trash-can"></i>
                         </button>
                       </td>
@@ -116,10 +138,10 @@ const CartPage = () => {
                     </td>
                     <td className="pe-7 text-sm">
                       <div className="flex flex-col items-end">
-                        <div className="mb-2">$ 11111 </div>
-                        <div className="mb-2">$ 111 </div>
-                        <div className="mb-2">$ 50</div>
-                        <div>$111111 </div>
+                        <div className="mb-2">$ {subtotal} </div>
+                        <div className="mb-2">$ {discount} </div>
+                        <div className="mb-2">$ {shippingCost}</div>
+                        <div>${grandTotal} </div>
                       </div>
                     </td>
                   </tr>
